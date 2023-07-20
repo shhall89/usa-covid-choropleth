@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title># of Vaccinated People per 10k in WA Counties</title>
+    <title># of Fully Vaccinated per 10k in WA Counties</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
 
     <!-- Including the Mapbox GL CSS file -->
@@ -93,7 +93,7 @@
 <body>
     <div id="map"></div>
     <div class='map-overlay' id='features'>
-        <h2>Number of Vaccinated </h2>
+        <h2>Number of Fully Vaccinated People per 10k in WA Counties</h2>
         <div id='text-description'>
             <p>Hover over a county!</p>
         </div>
@@ -129,16 +129,16 @@
                         'fill-color': [
                             'step',
                             ['get', 'fullyVaxPer10k'],
-                            '#f4ed27',   // stop_output_0
-                            3250,          // stop_input_0
-                            '#fdae31',   // stop_output_1
-                            4250,          // stop_input_1
-                            '#e3665f',   // stop_output_2
-                            5250,          // stop_input_2
-                            '#b62f8b',   // stop_output_3
-                            6250,         // stop_input_3
-                            '#8708a6',   // stop_output_4
-                            7250,         // stop_input_4
+                            '#f4ed27', // stop_output_0
+                            3250, // stop_input_0
+                            '#fdae31', // stop_output_1
+                            4250, // stop_input_1
+                            '#e3665f', // stop_output_2
+                            5250, // stop_input_2
+                            '#b62f8b', // stop_output_3
+                            6250, // stop_input_3
+                            '#8708a6', // stop_output_4
+                            7250, // stop_input_4
                             '#43039e',
                             10000,
                             '#43039e'
@@ -168,7 +168,7 @@
 
                 // create legend
                 const legend = document.getElementById('legend');
-                legend.innerHTML = "<b># of Vaccinated per 10k<br>(people/sq.mi.)</b><br><br>";
+                legend.innerHTML = "<b>Number of Vaccinated People per 10k</b><br><br>";
 
 
                 layers.forEach((layer, i) => {
@@ -186,12 +186,14 @@
                 });
             });
 
-            map.on('mousemove', ({point}) => {
+            map.on('mousemove', ({
+                point
+            }) => {
                 const county = map.queryRenderedFeatures(point, {
                     layers: ['covid_data_layer']
                 });
                 document.getElementById('text-description').innerHTML = county.length ?
-                    `<h3>${county[0].properties.name}</h3><p><strong><em>${county[0].properties.fullyVaxPer10k}</strong> people per 10k</em></p>` :
+                    `<h3>${county[0].properties.name} County</h3><p><strong><em>${county[0].properties.fullyVaxPer10k}</strong> people per 10k</em></p>` :
                     `<p>Hover over a county!</p>`;
             });
         }
